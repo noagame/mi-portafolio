@@ -89,15 +89,15 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <p className="font-bold">Email</p>
-                                    <a href="mailto:contacto@ejemplo.com" className="hover:text-stone-900 dark:hover:text-white">contacto@ejemplo.com</a>
+                                    <a href="mailto:contacto@ejemplo.com" className="hover:text-stone-900 dark:hover:text-white">fabiandelvillar@gmail.com</a>
                                 </div>
                             </div>
 
                             <div className="flex gap-4 pt-6">
-                                <a href="#" className="w-12 h-12 bg-stone-100 dark:bg-stone-800 rounded-full flex items-center justify-center text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors">
+                                <a href="https://github.com/noagame" className="w-12 h-12 bg-stone-100 dark:bg-stone-800 rounded-full flex items-center justify-center text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors">
                                     <Github className="w-5 h-5" />
                                 </a>
-                                <a href="#" className="w-12 h-12 bg-stone-100 dark:bg-stone-800 rounded-full flex items-center justify-center text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors">
+                                <a href="https://www.linkedin.com/in/fabi%C3%A1n-del-villar-velasquez-894212273/" className="w-12 h-12 bg-stone-100 dark:bg-stone-800 rounded-full flex items-center justify-center text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors">
                                     <Linkedin className="w-5 h-5" />
                                 </a>
                             </div>
