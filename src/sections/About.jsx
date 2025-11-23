@@ -1,78 +1,58 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code, Database, Layout, Terminal } from 'lucide-react';
-
-const SkillCard = ({ icon: Icon, title, skills }) => (
-    <div className="p-6 bg-stone-50 rounded-xl border border-stone-200 shadow-sm hover:shadow-md hover:border-stone-300 transition-all">
-        <div className="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center mb-4 text-stone-600">
-            <Icon className="w-6 h-6" />
-        </div>
-        <h3 className="text-xl font-semibold text-stone-900 mb-2">{title}</h3>
-        <div className="flex flex-wrap gap-2">
-            {skills.map((skill) => (
-                <span key={skill} className="px-2 py-1 bg-stone-100 rounded text-xs text-stone-600 font-medium">
-                    {skill}
-                </span>
-            ))}
-        </div>
-    </div>
-);
+import { Code2, Database, Globe, Palette } from 'lucide-react';
 
 const About = () => {
+    const skills = [
+        { name: 'React & Angular', icon: <Code2 className="w-6 h-6" />, level: 'Avanzado' },
+        { name: 'TailwindCSS', icon: <Palette className="w-6 h-6" />, level: 'Avanzado' },
+        { name: 'Node.js Basics', icon: <Database className="w-6 h-6" />, level: 'Intermedio' },
+        { name: 'Web Architecture', icon: <Globe className="w-6 h-6" />, level: 'Intermedio' },
+    ];
+
     return (
-        <section id="about" className="py-24 bg-stone-50">
+        <section id="about" className="py-24 bg-white dark:bg-stone-950 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="grid md:grid-cols-2 gap-16 items-center">
                     <motion.div
-                        initial={{ opacity: 0, x: -20 }}
+                        initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-6">
-                            Sobre Mí
-                        </h2>
-                        <p className="text-lg text-stone-600 mb-6 leading-relaxed">
-                            Soy estudiante de Ingeniería en Informática en <span className="text-stone-600 font-semibold">INACAP</span>, apasionado por el desarrollo de software y la creación de soluciones digitales innovadoras.
-                        </p>
-                        <p className="text-lg text-stone-600 mb-8 leading-relaxed">
-                            Me especializo en el desarrollo frontend moderno, creando interfaces intuitivas y performantes. Mi objetivo es combinar código limpio con diseño funcional para entregar productos de alta calidad.
-                        </p>
-
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="p-4 bg-stone-50 rounded-lg text-center shadow-sm border border-stone-200">
-                                <span className="block text-3xl font-bold text-stone-600 mb-1">3+</span>
-                                <span className="text-sm text-stone-500">Años estudiando</span>
-                            </div>
-                            <div className="p-4 bg-stone-50 rounded-lg text-center shadow-sm border border-stone-200">
-                                <span className="block text-3xl font-bold text-stone-500 mb-1">10+</span>
-                                <span className="text-sm text-stone-500">Proyectos realizados</span>
-                            </div>
+                        <h2 className="text-4xl font-bold text-stone-900 dark:text-stone-100 mb-6">Quién Soy</h2>
+                        <div className="prose prose-lg text-stone-600 dark:text-stone-300">
+                            <p className="mb-4">
+                                Soy estudiante de Ingeniería en Informática en <span className="font-semibold text-stone-800 dark:text-stone-200">INACAP</span>, apasionado por el desarrollo frontend y la creación de interfaces de usuario intuitivas.
+                            </p>
+                            <p className="mb-4">
+                                Mi enfoque combina la lógica técnica con una sensibilidad estética moderna. Me especializo en construir aplicaciones web rápidas, accesibles y visualmente atractivas utilizando las últimas tecnologías del mercado.
+                            </p>
+                            <p>
+                                Busco constantemente nuevos desafíos que me permitan crecer profesionalmente y aportar valor a través de soluciones digitales innovadoras.
+                            </p>
                         </div>
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, x: 20 }}
+                        initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="grid gap-4"
+                        transition={{ duration: 0.6 }}
+                        className="grid grid-cols-1 sm:grid-cols-2 gap-6"
                     >
-                        <SkillCard
-                            icon={Layout}
-                            title="Frontend Moderno"
-                            skills={['React', 'Angular', 'Vue.js', 'Next.js']}
-                        />
-                        <SkillCard
-                            icon={Code}
-                            title="Estilos & UI"
-                            skills={['TailwindCSS', 'Sass', 'Framer Motion', 'Material UI']}
-                        />
-                        <SkillCard
-                            icon={Database}
-                            title="Backend & Tools"
-                            skills={['Node.js', 'Firebase', 'Git', 'Docker']}
-                        />
+                        {skills.map((skill, index) => (
+                            <div
+                                key={index}
+                                className="p-6 bg-stone-50 dark:bg-stone-900 rounded-xl border border-stone-100 dark:border-stone-800 hover:shadow-lg transition-shadow"
+                            >
+                                <div className="w-12 h-12 bg-stone-200 dark:bg-stone-800 rounded-lg flex items-center justify-center text-stone-700 dark:text-stone-300 mb-4">
+                                    {skill.icon}
+                                </div>
+                                <h3 className="font-bold text-stone-900 dark:text-stone-100 mb-1">{skill.name}</h3>
+                                <span className="text-sm text-stone-500 dark:text-stone-400">{skill.level}</span>
+                            </div>
+                        ))}
                     </motion.div>
                 </div>
             </div>
