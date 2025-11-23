@@ -52,27 +52,35 @@ export const contactService = {
         const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
         const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+        console.log("Intentando enviar correo con EmailJS...", { serviceId, templateId, publicKey: publicKey ? '***' : 'MISSING' });
+
         if (!serviceId || !templateId || !publicKey) {
-            console.warn("Faltan credenciales de EmailJS. No se envió el correo.");
+            console.error("Faltan credenciales de EmailJS. Verifica tu archivo .env");
             return;
         }
 
         try {
-            await emailjs.send(
+            const templateParams = {
+                from_name: data.name,
+                from_email: data.email,
+                message: data.message,
+                service_type: data.service || 'No especificado', // Nuevo campo
+                to_name: "Fabian",
+            };
+
+            console.log("Enviando parámetros a EmailJS:", templateParams);
+
+            const response = await emailjs.send(
                 serviceId,
                 templateId,
-                {
-                    from_name: data.name,
-                    from_email: data.email,
-                    message: data.message,
-                    to_name: "Fabian",
-                },
+                templateParams,
                 publicKey
             );
+
+            console.log("Correo enviado exitosamente!", response.status, response.text);
         } catch (error) {
             console.error("Error enviando correo EmailJS:", error);
             // No lanzamos error aquí para no fallar todo el proceso si solo falla el correo
-            // pero podríamos hacerlo si el correo es crítico.
         }
     }
 };

@@ -8,8 +8,9 @@ const Contact = () => {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
+        service: 'landing-page', // Valor por defecto
         message: '',
-        honeypot: '' // Campo trampa para bots
+        honeypot: ''
     });
     const [captchaValue, setCaptchaValue] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,9 +23,8 @@ const Contact = () => {
         setIsSubmitting(true);
         setError(null);
 
-        // 1. Validación Honeypot (Anti-Spam Invisible)
+        // 1. Validación Honeypot
         if (formState.honeypot) {
-            // Si el bot llenó este campo oculto, simulamos éxito pero no enviamos nada.
             console.warn("Bot detectado (Honeypot).");
             setIsSubmitting(false);
             setSubmitted(true);
@@ -43,12 +43,13 @@ const Contact = () => {
             await contactService.sendMessage({
                 name: formState.name,
                 email: formState.email,
+                service: formState.service,
                 message: formState.message
             });
 
             setIsSubmitting(false);
             setSubmitted(true);
-            setFormState({ name: '', email: '', message: '', honeypot: '' });
+            setFormState({ name: '', email: '', service: 'landing-page', message: '', honeypot: '' });
             setCaptchaValue(null);
             if (recaptchaRef.current) recaptchaRef.current.reset();
 
@@ -68,6 +69,10 @@ const Contact = () => {
         });
     };
 
+    const handleServiceChange = (service) => {
+        setFormState({ ...formState, service });
+    };
+
     return (
         <section id="contact" className="py-24 bg-white dark:bg-stone-950 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,7 +84,7 @@ const Contact = () => {
                     >
                         <h2 className="text-4xl font-bold text-stone-900 dark:text-stone-100 mb-6">Hablemos</h2>
                         <p className="text-xl text-stone-600 dark:text-stone-300 mb-8">
-                            ¿Tienes un proyecto en mente? Estoy disponible para trabajos freelance y colaboraciones.
+                            ¿Tienes un proyecto en mente? Selecciona el tipo de servicio y cuéntame más.
                         </p>
 
                         <div className="space-y-6">
@@ -89,7 +94,7 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <p className="font-bold">Email</p>
-                                    <a href="mailto:contacto@ejemplo.com" className="hover:text-stone-900 dark:hover:text-white">fabiandelvillar@gmail.com</a>
+                                    <a href="mailto:fabiandelvillar@gmail.com" className="hover:text-stone-900 dark:hover:text-white">fabiandelvillar@gmail.com</a>
                                 </div>
                             </div>
 
@@ -137,6 +142,30 @@ const Contact = () => {
                                     placeholder="tu@email.com"
                                 />
                             </div>
+
+                            {/* Service Selection */}
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-3">Tipo de Servicio</label>
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    {[
+                                        { id: 'landing-page', label: 'Landing Page' },
+                                        { id: 'web-app', label: 'Web App Dinámica' },
+                                        { id: 'ecommerce', label: 'App Full Stack' }
+                                    ].map((service) => (
+                                        <div
+                                            key={service.id}
+                                            onClick={() => handleServiceChange(service.id)}
+                                            className={`cursor-pointer px-4 py-3 rounded-lg border text-center text-sm font-medium transition-all ${formState.service === service.id
+                                                ? 'bg-stone-800 text-white border-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:border-stone-100'
+                                                : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400 dark:bg-stone-800 dark:text-stone-400 dark:border-stone-700 dark:hover:border-stone-500'
+                                                }`}
+                                        >
+                                            {service.label}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
                             <div className="mb-6">
                                 <label htmlFor="message" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">Mensaje</label>
                                 <textarea
@@ -165,7 +194,7 @@ const Contact = () => {
                             <div className="mb-6 flex justify-center">
                                 <ReCAPTCHA
                                     ref={recaptchaRef}
-                                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Clave de prueba de Google
+                                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                                     onChange={(val) => setCaptchaValue(val)}
                                     theme="light"
                                 />
